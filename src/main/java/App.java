@@ -4,6 +4,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.Tuple2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class App {
         exploreReduce(nums, sparkContext);
         exploreMap(List.of(2,35,46), sparkContext);
         exploreCount(nums, sparkContext);
-
+        exploreTuple(List.of(2,35,46), sparkContext);
         sparkContext.close();
     }
 
@@ -65,5 +66,12 @@ public class App {
         // build a RDD
         JavaRDD<Integer> rdd = sparkContext.parallelize(nums);
         rdd.map(Math::sqrt).collect().forEach(e -> log.info("Square Root : {}", e ));
+    }
+
+
+    private static void exploreTuple(List<Integer> nums, JavaSparkContext sparkContext) {
+        JavaRDD<Integer> rdd = sparkContext.parallelize(nums);
+        JavaRDD<Tuple2<Integer, Double>> rdd2 = rdd.map(i -> new Tuple2<>(i, Math.sqrt(i)));
+        rdd2.collect().forEach(t -> log.info("Tuple : {}", t));
     }
 }
