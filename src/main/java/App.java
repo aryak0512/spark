@@ -25,6 +25,8 @@ public class App {
 
         exploreCount(nums, sparkContext);
         exploreReduce(nums, sparkContext);
+        exploreMap(List.of(2,35,46), sparkContext);
+        exploreCount(nums, sparkContext);
 
         sparkContext.close();
     }
@@ -35,9 +37,10 @@ public class App {
      * @param sparkContext the context
      */
     private static void exploreCount(List<Double> nums, JavaSparkContext sparkContext) {
-        // build a RDD
         JavaRDD<Double> rdd = sparkContext.parallelize(nums);
-        log.info("Count : {}", rdd.count());
+        int count = rdd.map(n -> 1)
+                       .reduce((a, b) -> a + b);
+        log.info("Count is : {}", count);
     }
 
     /**
@@ -51,5 +54,16 @@ public class App {
         Function2<Double, Double, Double> f = (a, b) -> a + b;
         Double ans = rdd.reduce(f);
         log.info("Reduced : {}", ans);
+    }
+
+    /**
+     * Simple reduce operation, demonstrating addition of elements
+     * @param nums the dataset to operate on
+     * @param sparkContext the context
+     */
+    private static void exploreMap(List<Integer> nums, JavaSparkContext sparkContext) {
+        // build a RDD
+        JavaRDD<Integer> rdd = sparkContext.parallelize(nums);
+        rdd.map(Math::sqrt).collect().forEach(e -> log.info("Square Root : {}", e ));
     }
 }
