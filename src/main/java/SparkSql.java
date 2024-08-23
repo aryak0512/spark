@@ -1,8 +1,8 @@
-import org.apache.logging.log4j.Level;
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class SparkSql {
         sparkSession.close();
     }
 
-    private static void exploreFilterUsingLambdas(Dataset<Row> dataset) {
+    private static void exploreFilterUsingLambdas(@NotNull Dataset<Row> dataset) {
 
         FilterFunction<Row> rowFilterFunction = row -> row.getAs("subject").equals("Modern Art");
         dataset.filter(rowFilterFunction).show(3);
@@ -37,21 +37,21 @@ public class SparkSql {
         dataset.filter(rowFilterFunction2).show(3);
     }
 
-    private static void exploreFilterUsingExpressions(Dataset<Row> dataset) {
+    private static void exploreFilterUsingExpressions(@NotNull Dataset<Row> dataset) {
         Dataset<Row> modernArtRecords = dataset.filter("subject = 'Modern Art'");
         modernArtRecords.show(3);
         Dataset<Row> modernArtRecords2007 = dataset.filter("subject = 'Modern Art' and year = 2007");
         modernArtRecords2007.show(3);
     }
 
-    private static void exploreValues(Dataset<Row> dataset) {
+    private static void exploreValues(@NotNull Dataset<Row> dataset) {
         Row row = dataset.first();
         String subject = (String) row.get(2);
         int year = Integer.parseInt(row.getAs("year"));
         log.info("Year is : {} and subject is : {}", year, subject);
     }
 
-    private static void exploreDataset(Dataset dataset) {
+    private static void exploreDataset(@NotNull Dataset dataset) {
         // work internally as a distributed RDD
         dataset.show(2);
         var count = dataset.count();
