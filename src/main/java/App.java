@@ -1,6 +1,7 @@
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ public class App {
     public static void main(String[] args) {
 
         // create the context
-        SparkConf conf = getConfig();
+        SparkConf conf = Util.getConfig();
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
 
         List<Double> nums = new ArrayList<>();
@@ -22,22 +23,33 @@ public class App {
         nums.add(425.89);
         nums.add(345.89);
 
-        // build a RDD
-        JavaRDD<Double> parallelize = sparkContext.parallelize(nums);
-        long count = parallelize.count();
+        exploreCount(nums, sparkContext);
+        exploreReduce(nums, sparkContext);
 
-        log.info("Count : {}", count);
         sparkContext.close();
     }
 
-    private static SparkConf getConfig() {
-        // prepare the config
-        SparkConf conf = new SparkConf();
-        // sample label visible in reports
-        conf.setAppName("my-spark app");
-        // use all available cores of the system
-        conf.setMaster("local[*]");
-        return conf;
+    /**
+     * Simple count operation
+     * @param nums the dataset to operate on
+     * @param sparkContext the context
+     */
+    private static void exploreCount(List<Double> nums, JavaSparkContext sparkContext) {
+        // build a RDD
+        JavaRDD<Double> rdd = sparkContext.parallelize(nums);
+        log.info("Count : {}", rdd.count());
     }
 
+    /**
+     * Simple reduce operation, demonstrating addition of elements
+     * @param nums the dataset to operate on
+     * @param sparkContext the context
+     */
+    private static void exploreReduce(List<Double> nums, JavaSparkContext sparkContext) {
+        // build a RDD
+        JavaRDD<Double> rdd = sparkContext.parallelize(nums);
+        Function2<Double, Double, Double> f = (a, b) -> a + b;
+        Double ans = rdd.reduce(f);
+        log.info("Reduced : {}", ans);
+    }
 }
