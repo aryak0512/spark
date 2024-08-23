@@ -1,12 +1,18 @@
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
 
 import static org.apache.spark.sql.functions.*;
+
+import org.apache.spark.sql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SparkSql {
 
@@ -28,8 +34,34 @@ public class SparkSql {
         exploreFilterUsingLambdas(dataset);
         exploreFilterUsingFunctions(dataset);
         exploreTemporaryViews(dataset, sparkSession);
-
+        exploreInMemoryDataset(sparkSession);
         sparkSession.close();
+    }
+
+    /**
+     * creates an in-memory dataset, quite nasty process
+     * @param sparkSession
+     */
+    private static void exploreInMemoryDataset(SparkSession sparkSession) {
+
+        List<Row> inMemory = new ArrayList<>();
+        inMemory.add(RowFactory.create("WARN", "2016-12-31 04:19:32"));
+        inMemory.add(RowFactory.create("FATAL", "2016-12-31 03:22:34"));
+        inMemory.add(RowFactory.create("WARN", "2016-12-31 03:21:21"));
+        inMemory.add(RowFactory.create("INFO", "2015-4-21 14:32:21"));
+        inMemory.add(RowFactory.create("FATAL", "2015-4-21 19:23:20"));
+
+        // define structure of fields
+        StructField[] fields = new StructField[]{
+                new StructField("level", DataTypes.StringType, false, Metadata.empty()),
+                new StructField("message", DataTypes.StringType, false, Metadata.empty())
+        };
+
+        StructType structType = new StructType(fields);
+        // dataset and dataframe are being used interchangeably
+        Dataset<Row> dataset = sparkSession.createDataFrame(inMemory, structType);
+        dataset.show(2);
+
     }
 
     private static void exploreTemporaryViews(Dataset<Row> dataset, SparkSession sparkSession) {
@@ -43,7 +75,7 @@ public class SparkSql {
 
     private static void exploreFilterUsingFunctions(Dataset<Row> dataset) {
         Dataset<Row> dataset1 = dataset.filter(col("subject").like("Modern Art")
-                        .and(col("year").equalTo(2006)));
+                .and(col("year").equalTo(2006)));
         dataset1.show(5);
     }
 
