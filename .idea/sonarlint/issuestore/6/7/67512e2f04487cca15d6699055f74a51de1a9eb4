@@ -1,0 +1,10 @@
+
+r	java:S106:"+Replace this use of System.out by a logger.(¹¦…‡úÿÿÿÿ8ÎþÅû—2J$1c79db49-4cb7-4645-8665-9f91c1ca6455
+…
+java:S1854P"=Remove this useless assignment to local variable "vaulesRdd".(öõ÷Çþÿÿÿÿ8›¼ºû—2J$681f1540-5094-47aa-bbea-630c8834c5fb
+~
+java:S1854O";Remove this useless assignment to local variable "keysRdd".(œ¤¹ø8›¼ºû—2J$03e7502e-bcd0-43a2-a3be-824fe5bdb49b
+o
+java:S1481O",Remove this unused "keysRdd" local variable.(œ¤¹ø8œ¼ºû—2J$bc789688-0c46-492f-806b-de81c86eb54a
+v
+java:S1481P".Remove this unused "vaulesRdd" local variable.(öõ÷Çþÿÿÿÿ8œ¼ºû—2J$2eaf9332-5fa1-40e7-a69f-f6639ad4fb09
