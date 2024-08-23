@@ -2,6 +2,8 @@ import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+
+import static org.apache.spark.sql.functions.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,14 @@ public class SparkSql {
         exploreValues(dataset);
         exploreFilterUsingExpressions(dataset);
         exploreFilterUsingLambdas(dataset);
+        exploreFilterUsingFunctions(dataset);
         sparkSession.close();
+    }
+
+    private static void exploreFilterUsingFunctions(Dataset<Row> dataset) {
+        Dataset<Row> dataset1 = dataset.filter(col("subject").like("Modern Art")
+                        .and(col("year").equalTo(2006)));
+        dataset1.show(5);
     }
 
     private static void exploreFilterUsingLambdas(@NotNull Dataset<Row> dataset) {
