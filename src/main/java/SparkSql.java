@@ -1,3 +1,5 @@
+import org.apache.logging.log4j.Level;
+import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -10,20 +12,49 @@ public class SparkSql {
 
     public static void main(String[] args) {
 
-        SparkSession sparkSession = SparkSession.builder()
-                .appName("my-app")
-                .master("local[*]")
-                .getOrCreate();
+        SparkSession sparkSession = Util.getSession();
 
+        // load the dataset
         String path = "src/main/resources/students.csv";
         Dataset<Row> dataset = sparkSession.read()
                 .option("header", true)
                 .csv(path);
 
+        exploreDataset(dataset);
+        exploreValues(dataset);
+        exploreFilterUsingExpressions(dataset);
+        exploreFilterUsingLambdas(dataset);
+        sparkSession.close();
+    }
+
+    private static void exploreFilterUsingLambdas(Dataset<Row> dataset) {
+
+        FilterFunction<Row> rowFilterFunction = row -> row.getAs("subject").equals("Modern Art");
+        dataset.filter(rowFilterFunction).show(3);
+
+        FilterFunction<Row> rowFilterFunction2 = row -> row.getAs("subject").equals("Modern Art")
+                && Integer.parseInt(row.getAs("year")) == 2008;
+        dataset.filter(rowFilterFunction2).show(3);
+    }
+
+    private static void exploreFilterUsingExpressions(Dataset<Row> dataset) {
+        Dataset<Row> modernArtRecords = dataset.filter("subject = 'Modern Art'");
+        modernArtRecords.show(3);
+        Dataset<Row> modernArtRecords2007 = dataset.filter("subject = 'Modern Art' and year = 2007");
+        modernArtRecords2007.show(3);
+    }
+
+    private static void exploreValues(Dataset<Row> dataset) {
+        Row row = dataset.first();
+        String subject = (String) row.get(2);
+        int year = Integer.parseInt(row.getAs("year"));
+        log.info("Year is : {} and subject is : {}", year, subject);
+    }
+
+    private static void exploreDataset(Dataset dataset) {
         // work internally as a distributed RDD
-        dataset.show();
+        dataset.show(2);
         var count = dataset.count();
         log.info("Count of rows : {}", count);
-        sparkSession.close();
     }
 }
