@@ -2,6 +2,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import scala.Tuple2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class App {
@@ -31,10 +34,30 @@ public class App {
         exploreMap(List.of(2, 35, 46), sparkContext);
         exploreCount(nums, sparkContext);
         exploreTuple(List.of(2, 35, 46), sparkContext);
+        explorePairRdd(sparkContext);
+        exploreReadFromDisk(sparkContext);
+
         sparkContext.close();
 
+    }
 
-        explorePairRdd(sparkContext);
+    /**
+     * reads a file from hard disk or AWS s3 bucket or HDFS
+     * @param sparkContext the context
+     */
+    private static void exploreReadFromDisk(JavaSparkContext sparkContext) {
+
+        JavaRDD<String> fileRdd = sparkContext.textFile("src/main/resources/input.txt");
+
+        FlatMapFunction<String, String> flatMapFunction = s -> {
+            List<String> wordList = Arrays.asList(s.split(" "));
+            return wordList.iterator();
+        };
+
+        fileRdd.flatMap(flatMapFunction)
+                .collect()
+                .forEach(System.out::println);
+
     }
 
     private static void explorePairRdd(JavaSparkContext sparkContext) {
