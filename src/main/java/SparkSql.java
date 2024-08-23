@@ -27,7 +27,18 @@ public class SparkSql {
         exploreFilterUsingExpressions(dataset);
         exploreFilterUsingLambdas(dataset);
         exploreFilterUsingFunctions(dataset);
+        exploreTemporaryViews(dataset, sparkSession);
+
         sparkSession.close();
+    }
+
+    private static void exploreTemporaryViews(Dataset<Row> dataset, SparkSession sparkSession) {
+        // pure SQL can be run against views only
+        dataset.createOrReplaceTempView("my_student_view");
+
+        // interact with the view using sparkSession
+        Dataset<Row> dataset1 = sparkSession.sql("select year , avg(score) from my_student_view group by year");
+        dataset1.show();
     }
 
     private static void exploreFilterUsingFunctions(Dataset<Row> dataset) {
