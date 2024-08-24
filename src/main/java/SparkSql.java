@@ -1,4 +1,6 @@
+import algebra.lattice.Bool;
 import org.apache.spark.api.java.function.FilterFunction;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -6,6 +8,8 @@ import org.apache.spark.sql.SparkSession;
 
 import static org.apache.spark.sql.functions.*;
 
+import org.apache.spark.sql.expressions.SparkUserDefinedFunction;
+import org.apache.spark.sql.expressions.UserDefinedFunction;
 import org.apache.spark.sql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -41,8 +45,71 @@ public class SparkSql {
         //exploreGrouping(inMemoryDataset, sparkSession);
 //        exploreFormatting(inMemoryDataset, sparkSession);
 //        exploreDataFrameApi(sparkSession);
-        explorePivot(sparkSession);
+//        explorePivot(sparkSession);
+//        exploreAggregation(sparkSession);
+//        codeExercise(sparkSession);
+        exploreUdf(sparkSession);
         sparkSession.close();
+    }
+
+    /**
+     * add new columns to the dataset by adding some processing logic to the existing columns
+     * add status as pass if grade is A, B, C and status as fail is grade is D
+     *
+     * @apiNote UDFs can be used in SQL queries as well
+     * @param sparkSession
+     */
+    private static void exploreUdf(SparkSession sparkSession) {
+        Dataset<Row> dataset = sparkSession.read()
+                .option("header", true)
+                .csv("src/main/resources/students.csv");
+
+        // before using user defined function (UDF) we need to register it with spark
+        sparkSession.udf().register("isPassed", (String grade, String subject) -> {
+
+            // if subject is biology, only A and A+ mean pass
+            if ( subject.equals("Biology") ) {
+                return grade.equals("A") || grade.equals("A+");
+            }
+            return grade.equals("A") || grade.equals("A+") || grade.equals("B") || grade.equals("C");
+
+        }, DataTypes.BooleanType);
+
+        // mention the new column we want to add in the dataset and its compute logic by calling out the UDF we registered earlier
+        dataset = dataset.withColumn("is_pass", callUDF("isPassed", col("grade"), col("subject")));
+        dataset.show();
+    }
+
+    /**
+     * build pivot table with subjects on the LHS
+     * years on the top
+     *
+     * @param sparkSession
+     */
+    private static void codeExercise(SparkSession sparkSession) {
+        Dataset<Row> dataset = sparkSession.read()
+                .option("header", true)
+                .csv("src/main/resources/students.csv");
+
+        dataset = dataset.groupBy("subject")
+                .pivot("year")
+                .agg(round(avg("score"), 2).as("Average"), round(stddev("score")).as("Std-dev"));
+        dataset.show();
+    }
+
+    /**
+     * get max and min score per subject
+     * @param sparkSession
+     */
+    private static void exploreAggregation(SparkSession sparkSession) {
+
+        Dataset<Row> dataset = sparkSession.read()
+                .option("header", true)
+                .csv("src/main/resources/students.csv");
+
+        Dataset<Row> aggregatedData = dataset.groupBy(col("subject"))
+                                        .agg(max(col("score")).as("MAX_SCORE"), min(col("score")).as("MIN_SCORE"));
+        aggregatedData.show();
     }
 
     private static void explorePivot(SparkSession sparkSession) {
