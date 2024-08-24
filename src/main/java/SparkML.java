@@ -1,5 +1,4 @@
 import org.apache.spark.ml.feature.VectorAssembler;
-import org.apache.spark.ml.linalg.Vector;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.LinearRegressionModel;
 import org.apache.spark.sql.Dataset;
