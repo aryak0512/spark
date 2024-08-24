@@ -1,6 +1,4 @@
-import algebra.lattice.Bool;
 import org.apache.spark.api.java.function.FilterFunction;
-import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
@@ -8,8 +6,6 @@ import org.apache.spark.sql.SparkSession;
 
 import static org.apache.spark.sql.functions.*;
 
-import org.apache.spark.sql.expressions.SparkUserDefinedFunction;
-import org.apache.spark.sql.expressions.UserDefinedFunction;
 import org.apache.spark.sql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
