@@ -28,21 +28,31 @@ public class SparkSql {
                 .option("header", true)
                 .csv(path);
 
-        exploreDataset(dataset);
-        exploreValues(dataset);
-        exploreFilterUsingExpressions(dataset);
-        exploreFilterUsingLambdas(dataset);
-        exploreFilterUsingFunctions(dataset);
-        exploreTemporaryViews(dataset, sparkSession);
-        exploreInMemoryDataset(sparkSession);
+//        exploreDataset(dataset);
+//        exploreValues(dataset);
+//        exploreFilterUsingExpressions(dataset);
+//        exploreFilterUsingLambdas(dataset);
+//        exploreFilterUsingFunctions(dataset);
+//        exploreTemporaryViews(dataset, sparkSession);
+//        exploreInMemoryDataset(sparkSession);
+
+        var inMemoryDataset = exploreInMemoryDataset(sparkSession);
+        exploreGrouping(inMemoryDataset, sparkSession);
         sparkSession.close();
+    }
+
+    private static void exploreGrouping(Dataset<Row> dataset, SparkSession sparkSession) {
+
+        dataset.createOrReplaceTempView("logging_view");
+        Dataset<Row> dataset1 = sparkSession.sql("select level, count(message) from logging_view group by level");
+        dataset1.show();
     }
 
     /**
      * creates an in-memory dataset, quite nasty process
      * @param sparkSession
      */
-    private static void exploreInMemoryDataset(SparkSession sparkSession) {
+    private static Dataset<Row> exploreInMemoryDataset(SparkSession sparkSession) {
 
         List<Row> inMemory = new ArrayList<>();
         inMemory.add(RowFactory.create("WARN", "2016-12-31 04:19:32"));
@@ -60,8 +70,7 @@ public class SparkSql {
         StructType structType = new StructType(fields);
         // dataset and dataframe are being used interchangeably
         Dataset<Row> dataset = sparkSession.createDataFrame(inMemory, structType);
-        dataset.show(2);
-
+        return dataset;
     }
 
     private static void exploreTemporaryViews(Dataset<Row> dataset, SparkSession sparkSession) {

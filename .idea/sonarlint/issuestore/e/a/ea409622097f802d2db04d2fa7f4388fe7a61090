@@ -1,7 +1,26 @@
 
 r
-java:S3740j"/Provide the parametrized type for this generic.(ÎïĞì8Æµ—‚˜2J$e99edf57-5e55-4727-ba21-349317b0ef74
+java:S3740s"/Provide the parametrized type for this generic.(ÎïĞì8Á¦—˜2J$51cbba56-5448-4ad4-8418-c69540bd79db
 
-java:S1192M"HDefine a constant instead of duplicating this literal "subject" 3 times.(»·ëÎÿÿÿÿÿ8Æµ—‚˜2J$7e40df80-7793-42ce-8a96-235f33729838
+java:S1192V"HDefine a constant instead of duplicating this literal "subject" 3 times.(»·ëÎÿÿÿÿÿ8Â¦—˜2J$28f83e7e-7d12-4cac-b846-8415dab299c3
 “
-java:S1192M"KDefine a constant instead of duplicating this literal "Modern Art" 3 times.(»·ëÎÿÿÿÿÿ8Çµ—‚˜2J$34bc6d2f-588d-42f2-99f5-ec914769eb18
+java:S1192V"KDefine a constant instead of duplicating this literal "Modern Art" 3 times.(»·ëÎÿÿÿÿÿ8Â¦—˜2J$7a36ba96-b05a-4844-9f77-0084a5856450
+§
+java:S1488H"_Immediately return this expression instead of assigning it to the temporary variable "dataset".(Ñî’¯şÿÿÿÿ8‚Õ®—˜2J$8ee86d64-2abf-447d-a7d4-485c61f0dbbd
+ƒ
+java:S1854";Remove this useless assignment to local variable "dataset".(ÌÊ³õúÿÿÿÿ8Çœ©—˜2J$c2a5f9f1-7eb7-482c-b9b0-cfc8dd7a63cf
+t
+java:S1481",Remove this unused "dataset" local variable.(ÌÊ³õúÿÿÿÿ8Èœ©—˜2J$0dda5e5c-3810-4464-ba3c-d8bd617c304d
+ƒ	java:S125"<This block of commented-out lines of code should be removed.(°‘Ÿıüÿÿÿÿ8Èœ©—˜2J$ca1585f6-29c2-44d3-ace8-c53eabfe9516
+‚
+java:S1144L":Remove this unused private "exploreTemporaryViews" method.(áµ¾˜ÿÿÿÿÿ8Õœ©—˜2J$9df44062-7ab4-45c5-9b04-41d13a102c4b
+ˆ
+java:S1144U"@Remove this unused private "exploreFilterUsingFunctions" method.(˜À´şÿÿÿÿ8Õœ©—˜2J$579f13d4-9a4a-4e7b-8499-794be490d2c2
+†
+java:S1144[">Remove this unused private "exploreFilterUsingLambdas" method.(¶ğó·ÿÿÿÿÿ8Õœ©—˜2J$3b481f0a-7110-448b-9968-23d4c4e2a64a
+Š
+java:S1144e"BRemove this unused private "exploreFilterUsingExpressions" method.(âÀ¸§ÿÿÿÿÿ8Õœ©—˜2J$4fa8264f-dee4-434c-bbc5-8a689f8fd406
+z
+java:S1144l"2Remove this unused private "exploreValues" method.(ˆœ…Ûıÿÿÿÿ8Õœ©—˜2J$870a61b4-d60a-4f98-8eba-f8f645ee9c51
+v
+java:S1144s"3Remove this unused private "exploreDataset" method.(ÎïĞì8Õœ©—˜2J$752ffac0-b227-4cec-96b6-8eeafcad56c4
