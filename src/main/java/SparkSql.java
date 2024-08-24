@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SparkSql {
@@ -38,8 +39,36 @@ public class SparkSql {
 
         var inMemoryDataset = exploreInMemoryDataset(sparkSession);
         //exploreGrouping(inMemoryDataset, sparkSession);
-        exploreFormatting(inMemoryDataset, sparkSession);
+//        exploreFormatting(inMemoryDataset, sparkSession);
+//        exploreDataFrameApi(sparkSession);
+        explorePivot(sparkSession);
         sparkSession.close();
+    }
+
+    private static void explorePivot(SparkSession sparkSession) {
+
+        Dataset<Row> dataset = sparkSession.read()
+                .option("header", true)
+                .csv("src/main/resources/biglog.txt");
+
+        dataset.createOrReplaceTempView("log_data");
+        dataset = sparkSession.sql("select level, date_format(datetime,'MMMM') as month from log_data");
+
+        List<Object> columns = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        Dataset<Row> pivot = dataset.groupBy(col("level")) // the Y axis label
+                            .pivot(col("month"), columns) // the X axis labels
+                            .count() // the aggregation function
+                            .na().fill(0); // if data not available, replace by zero
+        pivot.show();
+    }
+
+    /**
+     * difference between dataset and dataframe is that in dataset could be of POJOs
+     * e.g. Dataset<Customer>
+     *
+     * @param sparkSession
+     */
+    private static void exploreDataFrameApi(SparkSession sparkSession) {
     }
 
     /**
@@ -64,6 +93,7 @@ public class SparkSql {
 
     /**
      * creates an in-memory dataset, quite nasty process
+     *
      * @param sparkSession
      */
     private static Dataset<Row> exploreInMemoryDataset(SparkSession sparkSession) {

@@ -1,29 +1,41 @@
 
 s
-java:S3740"/Provide the parametrized type for this generic.(ÎïĞì8Š˜»—˜2J$04e17087-71a0-4a10-afe0-b594ff370d23
-
-java:S1192d"HDefine a constant instead of duplicating this literal "subject" 3 times.(»·ëÎÿÿÿÿÿ8‹˜»—˜2J$cd836f0a-54bb-4dff-af32-fe639306a1ad
-“
-java:S1192d"KDefine a constant instead of duplicating this literal "Modern Art" 3 times.(»·ëÎÿÿÿÿÿ8‹˜»—˜2J$847307d4-c9c9-49f3-bd93-a72154cd0fc3
+java:S3740Ÿ"/Provide the parametrized type for this generic.(ÎïĞì8İ×š˜2J$042589c9-1f88-40df-8907-1e789c840b9e
+‘
+java:S1192‚"HDefine a constant instead of duplicating this literal "subject" 3 times.(»·ëÎÿÿÿÿÿ8İ×š˜2J$92b63d39-c0ad-4d92-845a-3f913cf8e00d
+”
+java:S1192‚"KDefine a constant instead of duplicating this literal "Modern Art" 3 times.(»·ëÎÿÿÿÿÿ8İ×š˜2J$643e697c-c5d9-4bc8-9fec-5bbfe9294c73
 §
-java:S1488V"_Immediately return this expression instead of assigning it to the temporary variable "dataset".(Ñî’¯şÿÿÿÿ8‹˜»—˜2J$aed3eb93-00c7-48dc-bcee-2992d2a9b73c
+java:S1488t"_Immediately return this expression instead of assigning it to the temporary variable "dataset".(Ñî’¯şÿÿÿÿ8Ÿİ×š˜2J$900b6998-8723-42bb-9f73-6f3fff055dae
+É
+java:S1186G"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ìÈÿıÿÿÿÿ8¦İ×š˜2J$3ce01c94-91c3-4cce-88bb-dec0720fa123
+‹
+java:S1854("CRemove this useless assignment to local variable "inMemoryDataset".(¿õØ˜ÿÿÿÿÿ8×“Üš˜2J$baac44c4-5c06-450f-ba3b-f6fc807dbf03
 ƒ
-java:S1854";Remove this useless assignment to local variable "dataset".(ÌÊ³õúÿÿÿÿ8™˜»—˜2J$e05d7e60-3c81-4515-8078-7834d95ab21d
+java:S1854";Remove this useless assignment to local variable "dataset".(ÌÊ³õúÿÿÿÿ8¨İ×š˜2J$5a9b729a-9c7b-4620-acc1-d2385e11f2ab
 t
-java:S1481",Remove this unused "dataset" local variable.(ÌÊ³õúÿÿÿÿ8š˜»—˜2J$bc6fcfa9-15f7-4214-87a3-21db8b288993
-ƒ	java:S125"<This block of commented-out lines of code should be removed.(°‘Ÿıüÿÿÿÿ8š˜»—˜2J$9e47f6fa-e9b4-4271-bf28-2a0978e4ca06
-ƒ	java:S125("<This block of commented-out lines of code should be removed.(şÎÛ§ıÿÿÿÿ8ÌÌ—˜2J$d1247ab6-adae-4390-b4de-66c642477636
+java:S1481",Remove this unused "dataset" local variable.(ÌÊ³õúÿÿÿÿ8¨İ×š˜2J$326e5a64-b587-4265-a97f-25574024c8bf
+ƒ	java:S125 "<This block of commented-out lines of code should be removed.(°‘Ÿıüÿÿÿÿ8©İ×š˜2J$df118481-503d-4045-9ca7-24045772163b
+|
+java:S1481("4Remove this unused "inMemoryDataset" local variable.(¿õØ˜ÿÿÿÿÿ8Ù“Üš˜2J$262cd03f-c720-49bf-9cb8-56e9736e84d1
+ƒ	java:S125)"<This block of commented-out lines of code should be removed.(şÎÛ§ıÿÿÿÿ8©İ×š˜2J$3155e749-7f85-452f-b9d6-ebe6eb2c3e22
+{
+java:S1172G"3Remove this unused method parameter "sparkSession".(ìÈÿıÿÿÿÿ8ªİ×š˜2J$2531d363-c4c5-4116-b827-88478aa6df9b
+€
+java:S1144G"8Remove this unused private "exploreDataFrameApi" method.(ìÈÿıÿÿÿÿ8·İ×š˜2J$63be6f1f-0c22-4c48-8e0a-4733e6b5336d
+y
+java:S1144Q"6Remove this unused private "exploreFormatting" method.(ï¢ò‰8·İ×š˜2J$a907d4d2-859c-498f-a8cc-f214772f785a
 w
-java:S1144:"4Remove this unused private "exploreGrouping" method.(Ôò¦8×Ì—˜2J$734bf86e-ef84-4d92-848b-6cdec6046b1d
+java:S1144W"4Remove this unused private "exploreGrouping" method.(Ôò¦8·İ×š˜2J$b084ea8d-7250-426c-953c-d48b3e7b5486
 ‚
-java:S1144Z":Remove this unused private "exploreTemporaryViews" method.(áµ¾˜ÿÿÿÿÿ8¦˜»—˜2J$ea8b0932-a95b-4a49-8542-a36d440dd733
-ˆ
-java:S1144c"@Remove this unused private "exploreFilterUsingFunctions" method.(˜À´şÿÿÿÿ8¦˜»—˜2J$86163ce7-f3b9-4e38-b985-5f1f4e7837ca
-†
-java:S1144i">Remove this unused private "exploreFilterUsingLambdas" method.(¶ğó·ÿÿÿÿÿ8¦˜»—˜2J$a4e1f41e-a116-4a14-8ecf-0d1277823f01
-Š
-java:S1144s"BRemove this unused private "exploreFilterUsingExpressions" method.(âÀ¸§ÿÿÿÿÿ8¦˜»—˜2J$17cc227e-eb59-4d62-b359-142ae28f9e16
-z
-java:S1144z"2Remove this unused private "exploreValues" method.(ˆœ…Ûıÿÿÿÿ8¦˜»—˜2J$48d5dedf-b89e-47d7-902d-18f162c1680c
+java:S1144x":Remove this unused private "exploreTemporaryViews" method.(áµ¾˜ÿÿÿÿÿ8·İ×š˜2J$32e871ee-d242-4990-bbee-78f6adb3ad9b
+‰
+java:S1144"@Remove this unused private "exploreFilterUsingFunctions" method.(˜À´şÿÿÿÿ8·İ×š˜2J$80a8bf69-ba67-45c4-9a6b-90ed8d40262e
+‡
+java:S1144‡">Remove this unused private "exploreFilterUsingLambdas" method.(¶ğó·ÿÿÿÿÿ8·İ×š˜2J$d8c90b3a-3dd3-47ae-9df4-8724ef9201f3
+‹
+java:S1144‘"BRemove this unused private "exploreFilterUsingExpressions" method.(âÀ¸§ÿÿÿÿÿ8·İ×š˜2J$6f80faa5-3258-4ede-a791-3cf1b9c1b48d
+{
+java:S1144˜"2Remove this unused private "exploreValues" method.(ˆœ…Ûıÿÿÿÿ8·İ×š˜2J$507fb9e9-24c0-422b-a533-e3da4bb92b09
 w
-java:S1144"3Remove this unused private "exploreDataset" method.(ÎïĞì8¦˜»—˜2J$719e5844-3d97-4d62-b27b-36a042a395bf
+java:S1144Ÿ"3Remove this unused private "exploreDataset" method.(ÎïĞì8·İ×š˜2J$68b89c5d-ec2b-4aa5-b3ba-77a13880196a
