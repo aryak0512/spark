@@ -37,8 +37,22 @@ public class SparkSql {
 //        exploreInMemoryDataset(sparkSession);
 
         var inMemoryDataset = exploreInMemoryDataset(sparkSession);
-        exploreGrouping(inMemoryDataset, sparkSession);
+        //exploreGrouping(inMemoryDataset, sparkSession);
+        exploreFormatting(inMemoryDataset, sparkSession);
         sparkSession.close();
+    }
+
+    /**
+     * to find number of logs per month
+     *
+     * @param inMemoryDataset set to operate on
+     * @param sparkSession    the session object
+     * @see <p>https://spark.apache.org/docs/latest/api/sql/</p>
+     */
+    private static void exploreFormatting(Dataset<Row> inMemoryDataset, SparkSession sparkSession) {
+        inMemoryDataset.createOrReplaceTempView("my_log_table");
+        Dataset<Row> dataset = sparkSession.sql("select  date_format(message, 'MM') as d, count(1) from my_log_table group by d");
+        dataset.show();
     }
 
     private static void exploreGrouping(Dataset<Row> dataset, SparkSession sparkSession) {
