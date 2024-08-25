@@ -20,3 +20,5 @@ W
 'src/main/java/HousingPriceAnalysis.java,a/e/aeb5cdf0c1e057457eaa2f07395f6c3511ca2770
 V
 &src/main/java/IndexingAndEncoding.java,9/f/9f31062d317afc6e1ef4bc510282fcaa5c543ced
+Y
+)src/main/java/VideoAnalysisCaseStudy.java,5/1/5195b1a46d2fd0c2bead4b216c01a878cbd95fba
