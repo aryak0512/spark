@@ -1,4 +1,6 @@
 import org.apache.spark.ml.evaluation.RegressionEvaluator;
+import org.apache.spark.ml.feature.OneHotEncoder;
+import org.apache.spark.ml.feature.StringIndexer;
 import org.apache.spark.ml.feature.VectorAssembler;
 import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.regression.LinearRegression;
@@ -23,14 +25,38 @@ public class HousingPriceAnalysis {
                 .option("inferSchema", true) // since we need only numeric types
                 .csv(path);
 
+        // handling non-numeric fields using vectors
+        StringIndexer conditionIndexer = new StringIndexer();
+        conditionIndexer.setInputCol("condition");
+        conditionIndexer.setOutputCol("conditionIndex");
+        dataset = conditionIndexer.fit(dataset).transform(dataset);
+
+        StringIndexer gradeIndexer = new StringIndexer();
+        gradeIndexer.setInputCol("grade");
+        gradeIndexer.setOutputCol("gradeIndex");
+        dataset = gradeIndexer.fit(dataset).transform(dataset);
+
+        StringIndexer zipcodeIndexer = new StringIndexer();
+        zipcodeIndexer.setInputCol("zipcode");
+        zipcodeIndexer.setOutputCol("zipcodeIndex");
+        dataset = zipcodeIndexer.fit(dataset).transform(dataset);
+
+        OneHotEncoder oneHotEncoder = new OneHotEncoder();
+        oneHotEncoder.setInputCols(new String[]{"conditionIndex","gradeIndex","zipcodeIndex"});
+        oneHotEncoder.setOutputCols(new String[]{"conditionVector","gradeVector","zipcodeVector"});
+        dataset = oneHotEncoder.fit(dataset).transform(dataset);
+        dataset.show();
+
+
         // prepare the vector of features
         VectorAssembler vectorAssembler = new VectorAssembler();
-        vectorAssembler.setInputCols(new String[]{"bedrooms", "bathrooms", "sqft_living", "sqft_lot","floors","grade"});
+        vectorAssembler.setInputCols(new String[]{"bedrooms", "bathrooms", "sqft_living", "sqft_lot","floors","grade","conditionVector","gradeVector","zipcodeVector","waterfront"});
         vectorAssembler.setOutputCol("features");
 
         Dataset<Row> inputData = vectorAssembler.transform(dataset)
                 .select(col("price"), col("features")) // select only required features
                 .withColumnsRenamed(Map.of("price","label"));
+
 
         // split into 80% training & testing data and 20% holdOut data
         Dataset<Row> [] sets = inputData.randomSplit(new double[] {0.8, 0.2});
@@ -74,5 +100,15 @@ public class HousingPriceAnalysis {
         double r2Test = model.evaluate(holdOutData).r2();
         double rmseTest = model.evaluate(holdOutData).rootMeanSquaredError();
         System.out.println("R2 testing : " + r2Test + " | RMSE testing : " + rmseTest);
+
+        // selecting the features for the model based on high correlation (near to 1 or -1) 0 means non-correlated
+        // note : this is done using original dataset and dropping useless fields
+
+        dataset = dataset.drop("id", "date", "waterfront", "view", "condition", "grade", "yr_renovated", "zipcode", "lat", "long");
+        for ( String columnName : dataset.columns() ){
+            var corr = dataset.stat().corr("price", columnName);
+            System.out.println("The correlation between price and " + columnName + " is : " + corr);
+        }
+
     }
 }

@@ -18,3 +18,5 @@ J
 src/main/java/SparkML.java,8/4/84839c452f767f1b5ebcd9f192d24ba3f9d2c6cb
 W
 'src/main/java/HousingPriceAnalysis.java,a/e/aeb5cdf0c1e057457eaa2f07395f6c3511ca2770
+V
+&src/main/java/IndexingAndEncoding.java,9/f/9f31062d317afc6e1ef4bc510282fcaa5c543ced
