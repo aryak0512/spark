@@ -74,7 +74,7 @@ public class HousingPriceAnalysis {
         PipelineModel pipelineModel = pipeline.fit(dataset);
 
         // run the pipeline on holdoutData and get the actual predictions
-        Dataset<Row> holdOutResults = pipelineModel.transform(holdOutData);
+        Dataset<Row> holdOutResults = pipelineModel.transform(trainingAndTestingData);
         holdOutResults.show();
         holdOutResults = holdOutResults.drop("prediction");
 
